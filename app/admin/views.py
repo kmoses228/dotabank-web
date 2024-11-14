@@ -129,6 +129,10 @@ class Logs(AuthMixin, BaseView):
             limit(current_app.config['LOGS_PER_PAGE']).all()
         unresolved_count = Log.query.filter(Log.resolved_by_user_id == None).count()
 
+        unresolved_logs_2 = Log.query.filter(Log.resolved_by_user_id == None).\
+            order_by(Log.created_at.desc()).\
+            limit(current_app.config['LOGS_PER_PAGE']).all()
+
         resolved_logs = Log.query.filter(Log.resolved_by_user_id != None).\
             order_by(Log.resolved_at.desc()).\
             limit(current_app.config['LOGS_PER_PAGE']).\
